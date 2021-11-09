@@ -4,15 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors GAME</title>
-    <style>
-    body{
-        background-color: orange;
-    }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+    <title>Rock Paper & Scissors</title>
 </head>
 <body>
-    <h1>OPEN THE CONSOLE (F12)</h1>
-    <script charset="utf-8" src="app.js"></script>
+    <section class="game">
+        <div class="score">
+            <div class="player-score">
+                <h2>Player</h2>
+                <p>0</p>
+            </div>
+        
+            <div class="computer-score">
+                <h2>Computer</h2>
+                <p>0</p>
+            </div>
+        </div>
+
+        <div class="intro">
+           <div class="h1-container"><div class="h1-layer"></div> <h1>Rock Paper & Scissors</h1></div>
+            <button>Let's Play</button>
+        </div>
+
+        <div class="match fadeOut">
+            <h2 class="winner">Choose your weapon</h2>
+            <div class="hands">
+                <img src="images/warrior.png" alt="" class="player-hand" draggable="false">
+                <img src="images/warrior.png" alt="" class="computer-hand" draggable="false">
+            </div>
+            <div class="options">
+                <button class="warrior">warrior</button>
+                <button class="mage">mage</button>
+                <button class="hunter">hunter</button>
+            </div>
+        </div>
+
+        <div class="foot"><img src="images/table.png" alt=""></div>
+    </section>
 </body>
 </html>
