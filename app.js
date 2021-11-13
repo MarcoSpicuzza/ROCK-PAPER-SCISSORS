@@ -1,98 +1,68 @@
-const game = () => {
-    let pScore= 0;
-    let cScore= 0;
-    
-    const startGame = () => {
-        const playButton = document.querySelector(".intro button");
-        const introScreen = document.querySelector(".intro");
-        const match = document.querySelector(".match");
+const resultDisplay = document.querySelector("#result");
+const choicesDisplay = document.querySelector("#choices");
+const choices = ["rock", "paper", "scissors"];
 
-        playButton.addEventListener("click", () => {
-            introScreen.classList.add("fadeOut");
-            match.classList.add("fadeIn");
-        });
-    };
+const playerDisplay = document.querySelector("#playerDisplay");
+const computerDisplay = document.querySelector("#computerDisplay");
 
-    const playMatch = () => {
-        const options = document.querySelectorAll(".options button");
-        const playerHand = document.querySelector(".player-hand");
-        const computerHand = document.querySelector(".computer-hand");
-       
-        // Computer options
-        const computerOptions = ["warrior", "mage", "hunter"];
+let playerScore = document.createElement("p");
+let computerScore = document.createElement("p");
+
+let playerScoreIncrement = 0;
+let computerScoreIncrement = 0;
+
+playerDisplay.appendChild(playerScore);
+computerDisplay.appendChild(computerScore);
+
+const handleClick = (e) => {
+    getResults(e.target.innerHTML, choices[Math.floor(Math.random() * choices.length)]);
+}
+
+choices.forEach(choice => {
+    const button = document.createElement("button");
+    button.innerHTML = choice;;
+    button.addEventListener("click", handleClick);
+    choicesDisplay.appendChild(button);
+})
+
+const getResults = (userChoice, computerChoice) => {
+    switch (userChoice + computerChoice) {
+        case "rockpaper":
+        case "paperscissors":
+        case "scissorsrock":
+            resultDisplay.innerHTML = "You chose: " + userChoice + ", Computer Chose: " + computerChoice + " | You lose!";
+            computerScoreIncrement++;
+            computerScore.textContent = computerScoreIncrement;
+            if(playerScoreIncrement === 5){
+                alert("YOU SCORED 5 YOU WON THE GAME!");
+                location.reload();
+            }
+            if(computerScoreIncrement === 5){
+                alert("THE COMPUTER SCORED 5 YOU LOST THE GAME!");
+                location.reload();
+            }
+            break
         
-        options.forEach(option => {
-            option.addEventListener("click", function(){
-                const computerNumber = Math.floor(Math.random() * 3);
-                const computerChoice = computerOptions[computerNumber];
-
-
-                compareHands(this.textContent, computerChoice);
-                // Update hands images
-                playerHand.src =  `./images/${this.textContent}.png`
-                computerHand.src = `./images/${computerChoice}.png`
-            });
-        }); 
-    };
-
-    const updateScore = () => {
-        const playerScore = document.querySelector(".player-score p");
-        const computerScore = document.querySelector(".computer-score p");
-        playerScore.textContent = pScore;
-        computerScore.textContent = cScore;
+        case "paperrock":
+        case "scissorspaper":
+        case "rockscissors":
+             resultDisplay.innerHTML = "You chose: " + userChoice + ", Computer Chose: " + computerChoice + " | You win!";
+             playerScoreIncrement++;
+             playerScore.textContent = playerScoreIncrement;
+             if(playerScoreIncrement === 5){
+                alert("YOU SCORED 5 YOU WON THE GAME!");
+                location.reload();
+            }
+            if(computerScoreIncrement === 5){
+                alert("THE COMPUTER SCORED 5 YOU LOST THE GAME!");
+                location.reload();
+            }
+             break
+        
+        case "paperpaper":
+        case "scissorscissors":
+        case "rockrock":
+              resultDisplay.innerHTML = "You chose: " + userChoice + ", Computer Chose: " + computerChoice + " | It's a tie!";
+              break
     }
-
-    const compareHands = (playerChoice, computerChoice) => {
-        const winner = document.querySelector(".winner");
-        if(playerChoice === computerChoice){
-            winner.textContent = "It's a tie";
-            return
-        }
-
-        if(playerChoice === "warrior" && computerChoice === "mage" ){
-            winner.textContent = "Player Wins";
-            pScore++;
-            updateScore();
-              return 
-        }
-        else{
-            winner.textContent = "Computer Wins";
-            cScore++;
-            updateScore();
-            return
-        }
-        
-        if(playerChoice === "mage" && computerChoice === "hunter"){
-            winner.textContent = "Player Wins";
-            pScore++;
-            updateScore();
-            return
-        }
-        else{
-            winner.textContent = "Computer Wins";
-            cScore++;
-            updateScore();
-            return
-        }
-
-        if(playerChoice === "hunter" && computerChoice === "warrior"){
-            winner.textContent = "Player Wins";
-            pScore++;
-            updateScore();
-            return
-        }
-        else{
-            winner.textContent = "Computer Wins";
-            cScore++;
-            updateScore();
-            return
-        }
-    }
-        
-        
-
-    startGame();
-    playMatch();
-};
-
-game();
+}
